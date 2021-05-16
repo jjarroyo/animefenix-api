@@ -12,7 +12,7 @@ API Rest basada en el concepto WebScraping para extraer informacion de la pagina
 | *Return* | _Object_    | *Status* | [200]() |
 |----------|------------|----------|---------|
 
-```json
+```
 {
   "populars": [
     {
@@ -54,9 +54,10 @@ API Rest basada en el concepto WebScraping para extraer informacion de la pagina
   ]
 }
 ```
-~~~
-Es probable que esta seccion sea dividida en 3 partes ya que el objeto es demaciado grande para una peticion simple
-~~~
+
+```
+Es probable que esta seccion sea dividida en 3 partes ya que el objeto es demasiado grande para una peticion simple
+```
 
 
 > Method: **GET** \
@@ -66,7 +67,7 @@ Es probable que esta seccion sea dividida en 3 partes ya que el objeto es demaci
 |----------|-------------|----------|---------|
 
 
-```json
+```
 
 {
   "animes": 
@@ -95,7 +96,7 @@ Es probable que esta seccion sea dividida en 3 partes ya que el objeto es demaci
 |----------|-------------|----------|---------|
 
 
-```json
+```
 {
   "animes": 
   [
@@ -123,7 +124,7 @@ Es probable que esta seccion sea dividida en 3 partes ya que el objeto es demaci
 |----------|-------------|----------|---------|
 
 
-```json
+```
 
 {
   "id": "ijiranaide-nagatoro-san",
@@ -196,7 +197,7 @@ Es probable que esta seccion sea dividida en 3 partes ya que el objeto es demaci
 |----------|-------------|----------|---------|
 
 
-```json
+```
 
 {
   "anime_id": "ijiranaide-nagatoro-san",
@@ -255,7 +256,7 @@ Es probable que esta seccion sea dividida en 3 partes ya que el objeto es demaci
 | *Return* | _Array_    | *Status* | [200]() |
 |----------|------------|----------|---------|
 
-```json
+```
 [
   
   {
