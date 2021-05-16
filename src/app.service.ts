@@ -71,32 +71,27 @@ export class AppService {
     method: 'GET',
     url: this.url,
   };
-  async getLastest() {
+  getHome() {
+    return {
+      message: 'API Working!',
+      author: 'Carlos Burelo',
+      repository: 'https://github.com/carlos-burelo/animefenix-api',
+      endpoints: {
+        episodes: '/episodes',
+        recents: '/recents',
+        search: '/search?q=:name',
+        getAnime: '/anime/:id',
+        getAnimes: '/animes?p=#',
+        getEpisode: '/ver/:id',
+      },
+      success: true,
+    };
+  }
+  async getPopulars() {
     try {
-      const episodes: EpisodesI[] = [];
       const populars: PopularI[] = [];
-      const recents: RecentI[] = [];
       const response = await scraper(this.home_url);
       const $ = cheerio.load(response);
-      $('.capitulos-grid .item').each((i, e) => {
-        let episode: EpisodesI;
-        const el = $(e);
-        const id: string = el
-          .find('.overarchingdiv a')
-          .attr('href')
-          .replace(`${this.url}/ver/`, '');
-        const title: string = el.find('.overtitle').text();
-        let number: any = el.find('.overepisode').text();
-        number = parseInt(number.replace('EP', ''));
-        const cover: string = el.find('.overarchingdiv a img').attr('src');
-        episode = {
-          id,
-          title,
-          number,
-          cover,
-        };
-        episodes.push(episode);
-      });
       $('.owl-carousel.home-slider .serie-card').each((i, e) => {
         let popular: PopularI;
         const el = $(e);
@@ -119,6 +114,14 @@ export class AppService {
         };
         populars.push(popular);
       });
+      return populars;
+    } catch (error) {}
+  }
+  async getRecents() {
+    try {
+      const recents: RecentI[] = [];
+      const response = await scraper(this.home_url);
+      const $ = cheerio.load(response);
       $('.list-series .serie-card').each((i, e) => {
         let recent: RecentI;
         const el = $(e);
@@ -142,12 +145,34 @@ export class AppService {
         };
         recents.push(recent);
       });
-      const home: HomeResponseI = {
-        populars: populars,
-        episodes: episodes,
-        recents: recents,
-      };
-      return home;
+      return recents;
+    } catch (error) {}
+  }
+  async getEpisodes() {
+    try {
+      const episodes: EpisodesI[] = [];
+      const response = await scraper(this.home_url);
+      const $ = cheerio.load(response);
+      $('.capitulos-grid .item').each((i, e) => {
+        let episode: EpisodesI;
+        const el = $(e);
+        const id: string = el
+          .find('.overarchingdiv a')
+          .attr('href')
+          .replace(`${this.url}/ver/`, '');
+        const title: string = el.find('.overtitle').text();
+        let number: any = el.find('.overepisode').text();
+        number = parseInt(number.replace('EP', ''));
+        const cover: string = el.find('.overarchingdiv a img').attr('src');
+        episode = {
+          id,
+          title,
+          number,
+          cover,
+        };
+        episodes.push(episode);
+      });
+      return episodes;
     } catch (error) {
       return { error: 404, message: error };
     }
@@ -231,7 +256,13 @@ export class AppService {
         };
         animes.push(anime);
       });
-      return animes;
+      if (animes.length == 0) {
+        return {
+          results: 0,
+        };
+      } else {
+        return animes;
+      }
     } catch (error) {
       return { error: 404, message: error };
     }
