@@ -452,7 +452,7 @@ export class AppService {
 
       let Episode;
       const ctrls = [];
-      const server_list = [];
+      var server_list = [];
 
       $(
         '.hero section:nth-child(2) .container .columns.is-multiline .column.is-12-mobile.is-4-tablet.is-3-desktop .columns div',
@@ -528,6 +528,44 @@ export class AppService {
           }
         });
       });
+
+      var serv_name = ["mega","yourupload","burstcloud","videobin","fembed","mp4upload","sendvid"]
+        var s_temp = []
+        for (const ser of server_list) {       
+
+          var response2 = await scraper(ser.url);          
+          let cont = cheerio.load(response2);
+          let dat =  cont('script').get()[0].children[0].data; 
+          dat = dat.replace(/";/g, '');
+          dat = dat.replace(/\n/g, '');
+          dat = dat.replace(/  /g, '');          
+      
+          var myRegex = /<iframe[^>]+src="(https:\/\/[^">]+)"/g;
+          var src = myRegex.exec(dat);
+          if(src != null){          
+              let url = src[1].replace(/ /g, '')
+              var name = "Otro"
+
+              for (const s_n of serv_name) {   
+                let posicion = url.indexOf(s_n);
+                if (posicion !== -1){
+                  name = s_n
+                  break
+                }
+              }
+
+              s_temp.push({name:name,url:url})
+          }
+        ////  if(s_temp.length > 0){
+            
+         // }
+         // console.log(src[1].replace(/ /g, ''))
+        }
+     // })
+        server_list = []
+        server_list = s_temp
+        Episode.servers = server_list
+
       return Episode;
     } catch (error) {
       return { error: 404, message: error };
@@ -541,7 +579,7 @@ export class AppService {
     text = text.replace(/";/g, '');
     text = text.replace(/\n/g, '');
     text = text.replace(/  /g, '');
-    text = text.replaceAll('</iframe>', '</iframe>\n');
+    text = text.replace('</iframe>', '</iframe>\n');
     text = text.replace(
       'console.log("primer elemento ----------- >" + tabsArray[1]);',
       '',
