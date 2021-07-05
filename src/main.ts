@@ -11,6 +11,6 @@ async function bootstrap() {
   app.use(morgan('dev'));
   app.disable('x-powered-by');
   app.disable('etag');
-  app.listen(port, host);
+  await app.listen(port, host);
 }
 bootstrap();
