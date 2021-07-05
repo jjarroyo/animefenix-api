@@ -151,6 +151,7 @@ export class AppService {
   async getEpisodes() {
     try {
       const episodes: EpisodesI[] = [];
+      this.home_url.url = this.url;
       const response = await scraper(this.home_url);
       console.log( this.home_url)
       const $ = cheerio.load(response);
