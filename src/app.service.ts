@@ -484,7 +484,7 @@ export class AppService {
       }
       $('.hero section:nth-child(2)').each((i, e) => {
         const el = $(e);
-        const title = el.find('h1.title').text().trim();
+        const title = el.find('h1.title.has-text-weight-semibold').text().trim();
         let no_ep: any = episode.split('-');
         no_ep = parseInt(no_ep[no_ep.length - 1]);
         const anime_id = episode.replace(`-${no_ep}`, '');
