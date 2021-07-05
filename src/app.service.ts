@@ -174,6 +174,7 @@ export class AppService {
       });
       return episodes;
     } catch (error) {
+      console.log(error)
       return { error: 404, message: error };
     }
   }
