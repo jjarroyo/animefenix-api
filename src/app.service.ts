@@ -153,6 +153,7 @@ export class AppService {
       const episodes: EpisodesI[] = [];
       const response = await scraper(this.home_url);
       const $ = cheerio.load(response);
+      console.log( $('.capitulos-grid .item'))
       $('.capitulos-grid .item').each((i, e) => {
         console.log("e..")
         let episode: EpisodesI;
